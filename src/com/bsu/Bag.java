@@ -2,6 +2,7 @@ package com.bsu;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Bag<T extends Item> {
     private List<T> items = new ArrayList<>();
@@ -19,16 +20,6 @@ public class Bag<T extends Item> {
     }
 
     public <E extends Item> int compareTo(Bag<E> otherBag){
-        int sumWeight = 0;
-        for(Item item:items){
-            sumWeight+=item.getWeight();
-        }
-
-        int otherSumWeight = 0;
-        for(Item item:otherBag.items){
-            otherSumWeight+=item.getWeight();
-        }
-
-        return sumWeight - otherSumWeight;
+        return items.stream().mapToInt(Item::getWeight).sum() - otherBag.items.stream().mapToInt(Item::getWeight).sum();
     }
 }
